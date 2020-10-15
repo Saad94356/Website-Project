@@ -92,3 +92,60 @@ function videoPlay() {
 }
 
 videoPlay();
+
+//plants slider
+
+const plantSlides = document.querySelectorAll(".plant-slide");
+const plantSlider = document.querySelector(".plants-slider");
+const next = document.querySelector("#next-plant");
+const prev = document.querySelector("#prev-plant");
+const slidesStyle = window.getComputedStyle(plantSlides[0]);
+let margin =
+  Number(slidesStyle.marginRight.replace("px", "")) +
+  Number(slidesStyle.marginLeft.replace("px", ""));
+
+let counter = 0;
+const size = plantSlides[0].clientWidth;
+plantSlider.style.transform = `translate(${size * 1 + margin}px)`;
+
+next.addEventListener("click", () => {
+  prev.style.pointerEvents = "all";
+  if (counter >= plantSlides.length - 1) return;
+  plantSlider.style.transition = "0.4s ease-in-out";
+  counter++;
+  if (counter > 1) {
+    margin = margin + 48;
+  }
+  console.log(counter);
+  plantSlider.style.transform = `translate(${-size * counter - margin}px)`;
+  if (counter === 0) {
+    plantSlider.style.transform = `translate(${-size * 0}px)`;
+  }
+  if (plantSlides[counter] === plantSlides[plantSlides.length - 2]) {
+    next.style.pointerEvents = "none";
+  }
+});
+
+counter--;
+
+prev.addEventListener("click", () => {
+  next.style.pointerEvents = "all";
+  if (counter <= 0) return;
+  plantSlider.style.transition = "0.4s ease-in-out";
+
+  if (counter >= 0) {
+    margin = margin - 48;
+  }
+  counter--;
+  console.log(counter);
+  plantSlider.style.transform = `translate(${-size * counter - margin}px)`;
+
+  if (plantSlides[counter] === plantSlides[0]) {
+    margin = 48;
+    plantSlider.style.transform = `translate(${size + margin}px)`;
+    prev.style.pointerEvents = "none";
+  }
+  if (plantSlides[counter] === plantSlides[0]) {
+    return counter--;
+  }
+});
