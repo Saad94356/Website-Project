@@ -1,6 +1,6 @@
 //slider start
 
-const slides = document.querySelectorAll(".slide");
+const slides = document.querySelectorAll(".slider .slide");
 const pointContainer = document.querySelector(".pointer");
 const pointers = document.querySelectorAll(".pointer span");
 let index = 0;
@@ -73,21 +73,22 @@ let timer = setInterval(autoPlay, 4000);
 
 function videoPlay() {
   const playButton = document.querySelector(".playButton");
-  const palyIcon = document.querySelector(".playButton i");
+  const playIcon = document.querySelector(".videoButton i");
   const video = document.querySelector(".first-video");
+  const button = document.querySelector(".videoButton");
 
-  playButton.addEventListener("click", () => {
-    video.addEventListener("ended", () => {
-      palyIcon.classList.add("fa-play");
-      palyIcon.classList.remove("fa-pause");
-      video.classList.remove("start");
-    });
-    palyIcon.classList.toggle("fa-play");
-    palyIcon.classList.toggle("fa-pause");
-    video.pause();
-    video.classList.toggle("start");
-    const start = document.querySelector(".start");
-    start.play();
+  button.addEventListener("click", () => {
+    button.classList.toggle("playButton");
+    button.classList.toggle("stopButton");
+    if (button.classList.contains("playButton")) {
+      video.play();
+      playIcon.classList.remove("fa-play");
+      playIcon.classList.add("fa-pause");
+    } else {
+      video.pause();
+      playIcon.classList.remove("fa-pause");
+      playIcon.classList.add("fa-play");
+    }
   });
 }
 
@@ -95,57 +96,94 @@ videoPlay();
 
 //plants slider
 
-const plantSlides = document.querySelectorAll(".plant-slide");
 const plantSlider = document.querySelector(".plants-slider");
+const plantSlides = document.querySelectorAll(".plant-slide");
 const next = document.querySelector("#next-plant");
 const prev = document.querySelector("#prev-plant");
-const slidesStyle = window.getComputedStyle(plantSlides[0]);
-let margin =
-  Number(slidesStyle.marginRight.replace("px", "")) +
-  Number(slidesStyle.marginLeft.replace("px", ""));
+const slideStyle = window.getComputedStyle(plantSlides[0]);
 
+// plant slides margin
+const marginNum =
+  Number(slideStyle.marginLeft.replace("px", "")) +
+  Number(slideStyle.marginRight.replace("px", ""));
+let margin = marginNum;
 let counter = 0;
 const size = plantSlides[0].clientWidth;
 plantSlider.style.transform = `translate(${size * 1 + margin}px)`;
 
-next.addEventListener("click", () => {
-  prev.style.pointerEvents = "all";
-  if (counter >= plantSlides.length - 1) return;
-  plantSlider.style.transition = "0.4s ease-in-out";
-  counter++;
-  if (counter > 1) {
-    margin = margin + 48;
-  }
-  console.log(counter);
-  plantSlider.style.transform = `translate(${-size * counter - margin}px)`;
-  if (counter === 0) {
-    plantSlider.style.transform = `translate(${-size * 0}px)`;
-  }
-  if (plantSlides[counter] === plantSlides[plantSlides.length - 2]) {
-    next.style.pointerEvents = "none";
-  }
+prev.addEventListener("click", () => {
+  prevPlSlide();
+  resetPlTimer();
 });
 
-counter--;
-
-prev.addEventListener("click", () => {
-  next.style.pointerEvents = "all";
-  if (counter <= 0) return;
-  plantSlider.style.transition = "0.4s ease-in-out";
-
-  if (counter >= 0) {
-    margin = margin - 48;
+next.addEventListener("click", () => {
+  nextPlSlide();
+  resetPlTimer();
+});
+function prevPlSlide() {
+  if (counter === 0) {
+    counter = 0;
+    margin = marginNum;
+  } else {
+    counter--;
+    counter--;
+    margin -= marginNum + marginNum;
+    plantSlider.style.transform = `translate(${-size * counter - margin}px)`;
+    plantSlider.style.transition = "0.5s ease-in-out";
+    counter++;
+    console.log(counter);
+    margin += marginNum;
+    if (counter < 1) {
+      margin = marginNum;
+    }
+    console.log(margin);
   }
-  counter--;
-  console.log(counter);
-  plantSlider.style.transform = `translate(${-size * counter - margin}px)`;
+  changePlSlide();
+}
 
-  if (plantSlides[counter] === plantSlides[0]) {
-    margin = 48;
+function nextPlSlide() {
+  if (counter == plantSlides.length - 1) {
+    counter = 0;
+    margin = marginNum;
     plantSlider.style.transform = `translate(${size + margin}px)`;
-    prev.style.pointerEvents = "none";
+  } else {
+    plantSlider.style.transform = `translate(${-size * counter}px)`;
+    if (counter >= 1) {
+      plantSlider.style.transform = `translate(${-size * counter - margin}px)`;
+      margin += marginNum;
+    }
+    counter++;
+    plantSlider.style.transition = "0.5s ease-in-out";
   }
-  if (plantSlides[counter] === plantSlides[0]) {
-    return counter--;
+  changePlSlide();
+}
+function changePlSlide() {
+  for (let i = 0; i < plantSlides.length; i++) {
+    plantSlides[i].classList.remove("active");
+    plantSlides[i].style.pointerEvents = "none";
   }
+  plantSlides[counter].classList.add("active");
+  plantSlides[counter].style.pointerEvents = "all";
+}
+
+function resetPlTimer() {
+  // when click to indicator or controls button
+  // stop timer
+  clearInterval(plTimer);
+  // then started again timer
+  plTimer = setInterval(auto, 8000);
+}
+
+function auto() {
+  nextPlSlide();
+}
+
+let plTimer = setInterval(auto, 8000);
+
+plantSlider.addEventListener("mouseover", () => {
+  clearInterval(plTimer);
+});
+
+plantSlider.addEventListener("mouseout", () => {
+  plTimer = setInterval(auto, 8000);
 });
