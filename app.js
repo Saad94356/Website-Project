@@ -166,13 +166,13 @@ function changePlSlide() {
   plantSlides[counter].style.pointerEvents = "all";
 }
 
-function resetPlTimer() {
-  // when click to indicator or controls button
-  // stop timer
-  clearInterval(plTimer);
-  // then started again timer
-  plTimer = setInterval(auto, 8000);
-}
+  function resetPlTimer() {
+    // when click to indicator or controls button
+    // stop timer
+    clearInterval(plTimer);
+    // then started again timer
+    plTimer = setInterval(auto, 8000);
+  }
 
 function auto() {
   nextPlSlide();
