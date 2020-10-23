@@ -253,12 +253,13 @@ span.active {
   width: 25%;
 }
 .main .product-content h2 {
-  font-size: 3rem;
+  font-size: 3vw;
   letter-spacing: 4px;
   line-height: 100%;
   margin-bottom: 15px;
 }
 .main .product-content p {
+  font-size: 1.2vw;
 }
 .main .product-content button {
   margin: 19px 0px;
@@ -269,9 +270,10 @@ span.active {
 }
 .main .product-content button a {
   text-decoration: none;
-  padding: 13px 34px;
+  padding: 1vw 3vw;
   display: block;
   color: black;
+  font-size: 1vw;
 }
 .main.img-one {
   display: flex;
@@ -301,7 +303,7 @@ span.active {
 /*Plant section start*/
 
 .plants-container .plants-wrapper {
-  margin: 0px 14.5%;
+  margin: 0px 14.2vw;
   overflow: hidden;
 }
 
@@ -323,7 +325,6 @@ span.active {
 
 .plants-container .plants-slider {
   display: inline-flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -336,13 +337,12 @@ span.active {
   padding: 0px 5px;
   padding-top: 5px;
   transition: 0.5s ease-in-out;
-  transform-origin: top;
+  overflow: hidden;
 }
 
 .plants-slider .plant-slide.active {
   transition: 0.5s ease-in-out;
   box-shadow: 0px 6px 20px 1px #e6e6e6;
-  transform-origin: top;
 }
 
 .plants-slider .plant-slide .plant-img {
@@ -360,12 +360,15 @@ span.active {
   justify-content: space-between;
   align-items: center;
   padding: 10px 12px;
-  transform: scaleY(0);
-  transition: 0.1s ease-in;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: 0.5s ease-in;
+  overflow: hidden;
 }
 
 .plant-slide.active .plant-content {
-  transform: scaleY(1);
+  transform: translateY(0%);
+  opacity: 1;
   transition: 0.5s ease-out;
 }
 
@@ -443,25 +446,6 @@ span.active {
 .gallery-container .gallery-wrapper {
 }
 
-.gallery-wrapper .gallery-indicators {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  margin: 35px auto;
-  justify-content: flex-end;
-  padding: 0px 111px;
-}
-
-.gallery-wrapper .gallery-indicators i {
-  color: #bababa;
-  font-size: 1.1rem;
-  padding: 5px 21px;
-  box-shadow: 0px 11px 19px 1px #e0e0e0;
-  cursor: pointer;
-  transition: 0.3s ease-in;
-  margin: 0px 21px;
-}
-
 .gallery-wrapper .gallery-title {
 }
 
@@ -478,15 +462,200 @@ span.active {
 }
 
 .gallery-wrapper .gallery-slider {
+  margin: 0px 40px;
+  padding: 90px 0px;
+  overflow: hidden;
 }
 
 .gallery-slider .img-slides {
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
   align-items: center;
+  overflow: hidden;
 }
 
 .gallery-slider .img-slides .slide {
+  overflow: hidden;
   width: 270px;
-  height: 350px;
+  height: 369px;
+  margin-right: 23px;
+  margin-left: 25px;
+  transition: 0.3s ease-in;
+}
+
+.gallery-slider .img-slides .slide img {
+  width: 100%;
+  height: 100%;
+}
+
+.gallery-slider .img-slides .slide:hover {
+  box-shadow: 0px 20px 20px 1px #969696;
+  transition: 0.3s ease-out;
+}
+
+/* Footer */
+
+.main-footer {
+}
+
+.main-footer .element-container {
+  padding: 2% 6%;
+}
+
+.element-container .element-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+  padding-left: 14%;
+}
+
+.element-wrapper .elements {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.element-wrapper .elements .media-section {
+}
+
+.media-section .plant-text {
+  padding: 24px;
+  border-bottom: 1px dashed #c0c0c0;
+  padding-left: 0;
+  padding-right: 40px;
+  margin-bottom: 26px;
+}
+
+.media-section .plant-text h2 {
+  font-family: "Sansita Swashed", cursive;
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+.media-section .media-icon {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 23px;
+}
+
+.media-section .media-icon a {
+  display: block;
+  width: fit-content;
+  padding: 10px 14px;
+  text-decoration: none;
+  box-shadow: 1px 10px 20px 1px gainsboro;
+  border-radius: 10%;
+  font-size: 1.1rem;
+}
+
+.media-section .media-icon a:hover .fa-facebook-f {
+  color: #3b5998;
+  transition: 0.3s ease-out;
+}
+
+.media-section .media-icon a:hover .fa-instagram {
+  color: #f09433;
+}
+
+.media-section .media-icon a i {
+  display: block;
+  color: black;
+  transition: 0.3s ease-out;
+}
+
+.elements .links-section {
+}
+
+.elements .links-section .links-text {
+  padding: 24px 40px 24px 0px;
+  margin-bottom: 26px;
+}
+
+.elements .links-section .links-text h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.elements .links-section .links {
+}
+
+.elements .links-section .links span {
+  display: block;
+}
+
+.elements .links-section .links span a {
+  display: block;
+  text-decoration: none;
+  color: #616161;
+  padding: 7px 0px;
+  width: fit-content;
+  position: relative;
+}
+
+.elements .links-section .links span a:hover {
+  color: black;
+}
+
+.elements .links-section .links span a:before {
+  content: "";
+  border-bottom: 1px solid black;
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  transform: scaleX(0);
+  transition: 0.3s ease-out;
+}
+
+.elements .links-section .links span a:hover:before {
+  transform: scaleY(1);
+  transition: 0.3s ease-out;
+}
+
+.elements .contact-section {
+}
+
+.elements .contact-section .contact-text {
+  padding: 24px 40px 24px 0px;
+  margin-bottom: 26px;
+}
+
+.elements .contact-section .contact-text h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.elements .contact-section .contacts {
+}
+
+.elements .contact-section .contacts span {
+  display: block;
+  color: #616161;
+  padding: 7px 0px;
+  width: fit-content;
+}
+
+.elements .footer-img {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 18%;
+  height: 232px;
+}
+
+.elements .footer-img img {
+  width: 100%;
+  height: 100%;
+}
+
+/**Responsive**/
+
+@media screen and (max-width: 1100px) {
+  .product-description-container .product-description-wrapper {
+    padding-left: 10%;
+  }
+
+  .video-playButton video {
+    width: 600px;
+    height: 350px;
+  }
 }

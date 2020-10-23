@@ -1,3 +1,5 @@
+"use strict"
+
 //slider start
 
 const slides = document.querySelectorAll(".slider .slide");
@@ -96,75 +98,78 @@ videoPlay();
 
 //plants slider
 
-const plantSlider = document.querySelector(".plants-slider");
-const plantSlides = document.querySelectorAll(".plant-slide");
-const next = document.querySelector("#next-plant");
-const prev = document.querySelector("#prev-plant");
-const slideStyle = window.getComputedStyle(plantSlides[0]);
+function plantSlider() {
+  const plantSlider = document.querySelector(".plants-slider");
+  const plantSlides = document.querySelectorAll(".plant-slide");
+  const next = document.querySelector("#next-plant");
+  const prev = document.querySelector("#prev-plant");
+  const slideStyle = window.getComputedStyle(plantSlides[0]);
 
-// plant slides margin
-const marginNum =
-  Number(slideStyle.marginLeft.replace("px", "")) +
-  Number(slideStyle.marginRight.replace("px", ""));
-let margin = marginNum;
-let counter = 0;
-const size = plantSlides[0].clientWidth;
-plantSlider.style.transform = `translate(${size * 1 + margin}px)`;
+  // plant slides margin
+  const marginNum =
+    Number(slideStyle.marginLeft.replace("px", "")) +
+    Number(slideStyle.marginRight.replace("px", ""));
+  let margin = marginNum;
+  let counter = 0;
+  const size = plantSlides[0].clientWidth;
+  plantSlider.style.transform = `translate(${size * 1 + margin}px)`;
 
-prev.addEventListener("click", () => {
-  prevPlSlide();
-  resetPlTimer();
-});
+  prev.addEventListener("click", () => {
+    prevPlSlide();
+    resetPlTimer();
+  });
 
-next.addEventListener("click", () => {
-  nextPlSlide();
-  resetPlTimer();
-});
-function prevPlSlide() {
-  if (counter === 0) {
-    counter = 0;
-    margin = marginNum;
-  } else {
-    counter--;
-    counter--;
-    margin -= marginNum + marginNum;
-    plantSlider.style.transform = `translate(${-size * counter - margin}px)`;
-    plantSlider.style.transition = "0.5s ease-in-out";
-    counter++;
-    console.log(counter);
-    margin += marginNum;
-    if (counter < 1) {
+  next.addEventListener("click", () => {
+    nextPlSlide();
+    resetPlTimer();
+  });
+  function prevPlSlide() {
+    if (counter === 0) {
+      counter = 0;
       margin = marginNum;
-    }
-    console.log(margin);
-  }
-  changePlSlide();
-}
-
-function nextPlSlide() {
-  if (counter == plantSlides.length - 1) {
-    counter = 0;
-    margin = marginNum;
-    plantSlider.style.transform = `translate(${size + margin}px)`;
-  } else {
-    plantSlider.style.transform = `translate(${-size * counter}px)`;
-    if (counter >= 1) {
+    } else {
+      counter--;
+      counter--;
+      margin -= marginNum + marginNum;
       plantSlider.style.transform = `translate(${-size * counter - margin}px)`;
+      plantSlider.style.transition = "0.5s ease-in-out";
+      counter++;
+      console.log(counter);
       margin += marginNum;
+      if (counter < 1) {
+        margin = marginNum;
+      }
+      console.log(margin);
     }
-    counter++;
-    plantSlider.style.transition = "0.5s ease-in-out";
+    changePlSlide();
   }
-  changePlSlide();
-}
-function changePlSlide() {
-  for (let i = 0; i < plantSlides.length; i++) {
-    plantSlides[i].classList.remove("active");
-    plantSlides[i].style.pointerEvents = "none";
+
+  function nextPlSlide() {
+    if (counter == plantSlides.length - 1) {
+      counter = 0;
+      margin = marginNum;
+      plantSlider.style.transform = `translate(${size + margin}px)`;
+    } else {
+      plantSlider.style.transform = `translate(${-size * counter}px)`;
+      if (counter >= 1) {
+        plantSlider.style.transform = `translate(${
+          -size * counter - margin
+        }px)`;
+        margin += marginNum;
+      }
+      counter++;
+      plantSlider.style.transition = "0.5s ease-in-out";
+    }
+    changePlSlide();
   }
-  plantSlides[counter].classList.add("active");
-  plantSlides[counter].style.pointerEvents = "all";
-}
+  function changePlSlide() {
+    for (let i = 0; i < plantSlides.length; i++) {
+      plantSlides[i].classList.remove("active");
+      plantSlides[i].style.pointerEvents = "none";
+    }
+    plantSlides[counter].classList.add("active");
+    plantSlides[counter].style.pointerEvents = "all";
+  }
 
   function resetPlTimer() {
     // when click to indicator or controls button
@@ -174,16 +179,59 @@ function changePlSlide() {
     plTimer = setInterval(auto, 8000);
   }
 
-function auto() {
-  nextPlSlide();
+  function auto() {
+    nextPlSlide();
+  }
+
+  let plTimer = setInterval(auto, 8000);
+
+  plantSlider.addEventListener("mouseover", () => {
+    clearInterval(plTimer);
+  });
+
+  plantSlider.addEventListener("mouseout", () => {
+    plTimer = setInterval(auto, 8000);
+  });
 }
 
-let plTimer = setInterval(auto, 8000);
+plantSlider();
 
-plantSlider.addEventListener("mouseover", () => {
-  clearInterval(plTimer);
-});
+// Gallery Slider
 
-plantSlider.addEventListener("mouseout", () => {
-  plTimer = setInterval(auto, 8000);
-});
+function gallerySlider() {
+  const imgSlide = document.querySelector(".img-slides");
+  const slides = document.querySelectorAll(".img-slides .slide");
+  const slideContainerWidth = imgSlide.clientWidth;
+  const slideWidth = slides[0].clientWidth;
+  const slideStyles = window.getComputedStyle(slides[0]);
+  const slideMargin =
+    Number(slideStyles.marginLeft.replace("px", "")) +
+    Number(slideStyles.marginRight.replace("px", ""));
+  const slideTotalWidth = slideWidth + slideMargin;
+  console.log(slideContainerWidth);
+  let count = 0;
+
+  function autoSlide() {
+    count++;
+    imgSlide.style.transform = `translate(${-count}px)`;
+    imgSlide.style.transition = "0.4s ease";
+    if (-count === -slideContainerWidth + slideTotalWidth * 4 - 150) {
+      imgSlide.style.transition = "0s ease";
+      count = -200;
+      imgSlide.style.transform = `translate(${-count}px)`;
+    }
+  }
+  let timer = setInterval(autoSlide, 20);
+
+  function stopSlider() {
+    imgSlide.addEventListener("mouseover", () => {
+      clearInterval(timer);
+    });
+    imgSlide.addEventListener("mouseout", () => {
+      timer = setInterval(autoSlide, 20);
+    });
+  }
+  stopSlider();
+}
+
+gallerySlider();
